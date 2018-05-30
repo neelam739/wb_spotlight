@@ -1,7 +1,6 @@
 package oneapp.incture.workbox.pmc.services;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -9,8 +8,8 @@ import javax.ejb.Stateless;
 import oneapp.incture.workbox.pmc.dto.ProcessAgeingResponse;
 import oneapp.incture.workbox.pmc.dto.ProcessDetailsDto;
 import oneapp.incture.workbox.pmc.dto.ProcessDetailsResponse;
-import oneapp.incture.workbox.pmc.dto.UserDetailsDto;
 import oneapp.incture.workbox.pmc.dto.UserProcessDetailRequestDto;
+import oneapp.incture.workbox.pmc.dto.responses.UserDetailsResponse;
 import oneapp.incture.workbox.poadapter.dao.ProcessEventsDao;
 import oneapp.incture.workbox.poadapter.dto.ProcessEventsDto;
 import oneapp.incture.workbox.util.PMCConstant;
@@ -61,7 +60,7 @@ public class ProcessFacade implements ProcessFacadeLocal {
 
 	}
 	@Override
-	public List<UserDetailsDto> getCreatedByList(String inputValue) {
+	public UserDetailsResponse getCreatedByList(String inputValue) {
 		ProcessEventsDao dao = new ProcessEventsDao(em.getEntityManager());
 		return dao.getCreatedByList(inputValue);
 

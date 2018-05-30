@@ -1,7 +1,5 @@
 package oneapp.incture.workbox.pmc.rest;
 
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -15,8 +13,8 @@ import javax.ws.rs.core.MediaType;
 import oneapp.incture.workbox.pmc.dto.ProcessAgeingResponse;
 import oneapp.incture.workbox.pmc.dto.ProcessDetailsDto;
 import oneapp.incture.workbox.pmc.dto.ProcessDetailsResponse;
-import oneapp.incture.workbox.pmc.dto.UserDetailsDto;
 import oneapp.incture.workbox.pmc.dto.UserProcessDetailRequestDto;
+import oneapp.incture.workbox.pmc.dto.responses.UserDetailsResponse;
 import oneapp.incture.workbox.pmc.services.ProcessFacadeLocal;
 import oneapp.incture.workbox.poadapter.dto.ProcessEventsDto;
 
@@ -48,7 +46,7 @@ public class ProcessRest {
 	
 	@GET
 	@Path("/createdBy/{inputString}")
-	public List<UserDetailsDto> getCreatedByList(@PathParam("inputString") String inputString){
+	public UserDetailsResponse getCreatedByList(@PathParam("inputString") String inputString){
 		return process.getCreatedByList(inputString);
 	}
 	

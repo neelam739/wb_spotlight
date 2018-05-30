@@ -23,6 +23,8 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.incture.pmc.poadapter.services.UserDetailsDto;
+
 import oneapp.incture.workbox.pmc.dto.AgingGraphDto;
 import oneapp.incture.workbox.pmc.dto.AgingResponseDto;
 import oneapp.incture.workbox.pmc.dto.AgingTableDto;
@@ -31,8 +33,8 @@ import oneapp.incture.workbox.pmc.dto.ProcessAgeingResponse;
 import oneapp.incture.workbox.pmc.dto.ProcessDetailsDto;
 import oneapp.incture.workbox.pmc.dto.ProcessDetailsResponse;
 import oneapp.incture.workbox.pmc.dto.ReportAgingDto;
-import oneapp.incture.workbox.pmc.dto.UserDetailsDto;
 import oneapp.incture.workbox.pmc.dto.UserProcessDetailRequestDto;
+import oneapp.incture.workbox.pmc.dto.responses.UserDetailsResponse;
 import oneapp.incture.workbox.pmc.entity.ProcessConfigDo;
 import oneapp.incture.workbox.poadapter.dto.ProcessEventsDto;
 import oneapp.incture.workbox.poadapter.dto.ResponseMessage;
@@ -665,24 +667,39 @@ public class ProcessEventsDao extends BaseDao<ProcessEventsDo, ProcessEventsDto>
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<UserDetailsDto> getCreatedByList(String inputValue) {
+	public UserDetailsResponse getCreatedByList(String inputValue) {
+		UserDetailsResponse dtoResponse = new UserDetailsResponse();
+		ResponseMessage responseMessage = new ResponseMessage();
+		responseMessage.setMessage("No Input!");
+		responseMessage.setStatus("FAILURE");
+		responseMessage.setStatusCode("1");
+		List<UserDetailsDto> dtoList = null;
 		if(!ServicesUtil.isEmpty(inputValue)){
 			inputValue = inputValue.toLowerCase(); 
-			String queryString = "SELECT DISTINCT(pe.STARTED_BY_DISP) AS DISPLAY_NAME, pe.STARTED_BY AS ID FROM PROCESS_EVENTS pe WHERE   lower (pe.STARTED_BY_DISP) LIKE '%"+inputValue+"%' OR   lower(pe.STARTED_BY) LIKE '%"+inputValue+"%'" ;
+			String queryString = "SELECT DISTINCT(pe.STARTED_BY_DISP) AS DISPLAY_NAME, pe.STARTED_BY AS ID FROM PROCESS_EVENTS pe " ;
+			if(inputValue.equals("*")) {
+			} else {
+				queryString += " WHERE lower(pe.STARTED_BY_DISP) LIKE '%"+inputValue+"%' OR  lower(pe.STARTED_BY) LIKE '%"+inputValue+"%' ";
+			}
 			Query query = this.getEntityManager().createNativeQuery(queryString.trim(), "createdByResult");
 			List<Object[]> objList =  query.getResultList();
 			if(!ServicesUtil.isEmpty(objList)){
-				List<UserDetailsDto> dtoList = new ArrayList<UserDetailsDto>();
+				dtoList = new ArrayList<UserDetailsDto>();
 				for(Object[] obj : objList){
 					UserDetailsDto dto= new UserDetailsDto();
 					dto.setDisplayName(obj[0] == null ? null : (String) obj[0]);
 					dto.setUserId(obj[1] == null ? null : (String) obj[1]);
 					dtoList.add(dto);
 				}
-				return dtoList;
+				responseMessage.setMessage("Users Fetched Successfully!");
+				responseMessage.setStatus("SUCCESS");
+				responseMessage.setStatusCode("0");
 			}
+			responseMessage.setMessage("Users Fetch Failed");
 		}
-		return null;
+		dtoResponse.setUserDetailsDtos(dtoList);
+		dtoResponse.setResponseMessage(responseMessage);
+		return dtoResponse;
 	}
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

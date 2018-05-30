@@ -1,14 +1,12 @@
 package oneapp.incture.workbox.pmc.services;
 
-import java.util.List;
-
 import javax.ejb.Local;
 
 import oneapp.incture.workbox.pmc.dto.ProcessAgeingResponse;
 import oneapp.incture.workbox.pmc.dto.ProcessDetailsDto;
 import oneapp.incture.workbox.pmc.dto.ProcessDetailsResponse;
-import oneapp.incture.workbox.pmc.dto.UserDetailsDto;
 import oneapp.incture.workbox.pmc.dto.UserProcessDetailRequestDto;
+import oneapp.incture.workbox.pmc.dto.responses.UserDetailsResponse;
 import oneapp.incture.workbox.poadapter.dto.ProcessEventsDto;
 
 @Local
@@ -26,7 +24,7 @@ public interface ProcessFacadeLocal {
 
 	ProcessAgeingResponse getProcessAgeing(String ageingType, String processName);
 
-	List<UserDetailsDto> getCreatedByList(String inputValue);
+	UserDetailsResponse getCreatedByList(String inputValue);
 
 	// byte[] generateExcelByDuration(ProcessDetailsDto processDetailsDto);
 
