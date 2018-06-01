@@ -586,5 +586,59 @@ public class WorkboxFacade implements WorkboxFacadeLocal {
 		}
 		return responseMessage;
 	}
+	
+	@Override
+	public ResponseMessage forward(WorkboxRequestDto requestDto) {
+		
+		EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("workbox_pu", DatabasePropertyProvider.getConnectionProperties("oracle"));
+		EntityManager emanager = emFactory.createEntityManager();
+		
+		String loggedin_user = UserManagementUtil.getLoggedInUser().getName();
+//		String loggedin_user_name = UserManagementUtil.getLoggedInUser().getName();
+		
+//		PreparedStatement preparedStatement;
+		ResponseMessage responseMessage = new ResponseMessage();
+		responseMessage.setMessage("Tasks(s) Forward Failed");
+		responseMessage.setStatus("FAILURE");
+		responseMessage.setStatusCode("1");
+		DateFormat df = new SimpleDateFormat(PMCConstant.DETAILDATE_AMPM_FORMATE);
+		try {
+			for (InstanceDto instanceDto : requestDto.getInstanceList()) {
+//				Connection con = DBConnect.getDbCon().conn;
+				
+				emanager.getTransaction().begin();
+				
+				String TEqueryString = "UPDATE TASK_EVENTS SET CUR_PROC = '"+requestDto.getForwardTo()+"', CUR_PROC_DISP = '"+requestDto.getUserDisplay()+"', FORWARDED_BY = '"+loggedin_user+"', STATUS = 'RESERVED', FORWARDED_AT = '"+df.format(new Date())+"' WHERE EVENT_ID = '"
+						+ instanceDto.getInstanceId() + "'";
+				Query TEquery = emanager.createNativeQuery(TEqueryString);
+				
+//				preparedStatement = con.prepareStatement("UPDATE TASK_EVENTS SET CUR_PROC = '"+requestDto.getForwardTo()+"', CUR_PROC_DISP = '"+requestDto.getForwardTo()+"', FORWARDED_BY = '"+loggedin_user+"', STATUS = 'RESERVED', FORWARDED_AT = '"+df.format(new Date())+"' WHERE EVENT_ID = '"
+//								+ instanceDto.getInstanceId() + "'");
+				int update = TEquery.executeUpdate();
+				System.err.println("Update Task Events for Forward Task : " + update);
+				
+				String TOqueryString = "UPDATE TASK_OWNERS SET IS_PROCESSED = '1', TASK_OWNER = '"+requestDto.getForwardTo()+"', TASK_OWNER_DISP = '"+requestDto.getUserDisplay()+"' WHERE EVENT_ID = '"
+						+ instanceDto.getInstanceId() + "' ";
+				Query TOquery = emanager.createNativeQuery(TOqueryString);
+
+//				preparedStatement = con.prepareStatement("UPDATE TASK_OWNERS SET IS_PROCESSED = '1' WHERE EVENT_ID = '"
+//								+ instanceDto.getInstanceId() + "' AND TASK_OWNER = '"+requestDto.getForwardTo()+"'");
+				update = TOquery.executeUpdate();
+				System.err.println("Update Task Owners for Forward Task : " + update);
+				emanager.getTransaction().commit();
+				
+				responseMessage.setMessage("Task(s) Forwarded");
+				responseMessage.setStatus("SUCCESS");
+				responseMessage.setStatusCode("0");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Exception : " + e.getMessage());
+			responseMessage.setMessage("Forward Failed with Exception : "+e.getMessage());
+			responseMessage.setStatus("FAILURE");
+			responseMessage.setStatusCode("1");
+		}
+		return responseMessage;
+	}
 
 }

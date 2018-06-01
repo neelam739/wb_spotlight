@@ -138,7 +138,7 @@
     <res-type>com.sap.core.connectivity.api.configuration.ConnectivityConfiguration</res-type>
   </resource-ref>
   <login-config>
-    <auth-method>FORM</auth-method>
+    <auth-method>BASIC</auth-method>
   </login-config>
   <security-constraint>
     <web-resource-collection>
@@ -153,6 +153,7 @@
     <web-resource-collection>
       <web-resource-name>Public Area</web-resource-name>
       <url-pattern>/userRegistration/regUser</url-pattern>
+      <url-pattern>/auth/login</url-pattern>
     </web-resource-collection>
   </security-constraint>
   <security-role>

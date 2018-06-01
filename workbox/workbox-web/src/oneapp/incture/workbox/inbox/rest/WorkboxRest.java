@@ -81,4 +81,10 @@ public class WorkboxRest {
 		return workbox.complete(requestDto);
 	}
 
+	@POST
+	@Path("/nominate")
+	public ResponseMessage nominate(WorkboxRequestDto requestDto) {
+		return workbox.forward(requestDto);
+	}
+
 }

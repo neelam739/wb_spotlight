@@ -2,6 +2,7 @@ package oneapp.incture.workbox.util;
 
 import com.sap.security.um.service.UserManagementAccessor;
 import com.sap.security.um.user.PersistenceException;
+import com.sap.security.um.user.UnsupportedUserAttributeException;
 import com.sap.security.um.user.User;
 import com.sap.security.um.user.UserProvider;
 
@@ -14,6 +15,14 @@ public class UserManagementUtil {
 			oneapp.incture.workbox.util.User usr = new oneapp.incture.workbox.util.User();
 			if(!ServicesUtil.isEmpty(user.getName())) {
 				usr.setName(user.getName().toUpperCase());
+				try {
+					usr.setFirstName(user.getAttribute("firstname"));
+					usr.setLastName(user.getAttribute("lastname"));
+					usr.setEmail(user.getAttribute("email"));
+				} catch (UnsupportedUserAttributeException e) {
+					e.printStackTrace();
+				}
+				
 //				usr.setName("P1942566911");
 			}
 //			UserManagementUtil.getUserGroups();

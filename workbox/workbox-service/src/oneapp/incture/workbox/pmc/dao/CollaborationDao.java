@@ -157,7 +157,7 @@ public class CollaborationDao extends BaseDao<CollaborationDo, CollaborationDto>
 				messageDto.setMessage(ServicesUtil.isEmpty(obj[3]) ? "" : (String) obj[3]);
 				messageDto.setUserId(ServicesUtil.isEmpty(obj[4]) ? "" : (String) obj[4]);
 				messageDto.setUserDisplayName(ServicesUtil.isEmpty(obj[5]) ? "" : (String) obj[5]);
-			//	messageDto.setChatDisplayName(ServicesUtil.isEmpty(obj[6]) ? "" : (String) obj[6]);
+				messageDto.setChatDisplayName(ServicesUtil.isEmpty(obj[6]) ? "" : (String) obj[6]);
 			//	messageDto.setChatId(ServicesUtil.isEmpty(obj[7]) ? "" : (String) obj[7]);
 				listMessageDto.add(messageDto);
 			}

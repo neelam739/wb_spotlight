@@ -94,8 +94,8 @@ public class ConfigurationFacade implements ConfigurationFacadeLocal {
 						allProcessDto = dto;
 					} else {
 						List<String> li = new ArrayList<String>();
-						li.addAll(Arrays.asList(dto.getUserGroup().split(", ")));
 						li.add(PMCConstant.SEARCH_SMALL_ALL);
+						li.addAll(Arrays.asList(dto.getUserGroup().split(", ")));
 						dto.setUserList(li);
 						userGroupSet.addAll(dto.getUserList());
 					}

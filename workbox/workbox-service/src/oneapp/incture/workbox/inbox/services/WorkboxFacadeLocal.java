@@ -32,6 +32,9 @@ public interface WorkboxFacadeLocal {
 
 
 	ResponseMessage complete(WorkboxRequestDto requestDto);
+
+
+	ResponseMessage forward(WorkboxRequestDto requestDto);
 	
 	
 

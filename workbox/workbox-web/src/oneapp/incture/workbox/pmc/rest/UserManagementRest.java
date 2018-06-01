@@ -22,6 +22,7 @@ import oneapp.incture.workbox.pmc.dto.responses.UserDtoResponse;
 import oneapp.incture.workbox.pmc.dto.responses.UserGroupDtoResponse;
 import oneapp.incture.workbox.pmc.wsdlconsumers.UMEManagementEngineConsumer;
 import oneapp.incture.workbox.poadapter.dto.ResponseMessage;
+import oneapp.incture.workbox.util.User;
 import oneapp.incture.workbox.util.UserManagementUtil;
 
 @Path("/user")
@@ -69,7 +70,12 @@ public class UserManagementRest {
 	public UserDetailsDto getLoggedInUser() {
 		UserDetailsDto userDetailsDto = new UserDetailsDto();
 		userDetailsDto = umeConsumer.getLoggedInUser();
-		userDetailsDto.setUserId(UserManagementUtil.getLoggedInUser().getName());
+		User user = UserManagementUtil.getLoggedInUser();
+		userDetailsDto.setUserId(user.getName());
+		userDetailsDto.setFirstName(user.getFirstName());
+		userDetailsDto.setLastName(user.getLastName());
+		userDetailsDto.setEmailId(user.getEmail());
+		userDetailsDto.setDisplayName(user.getFirstName() + " " + user.getLastName());
 		return userDetailsDto;
 	}
 

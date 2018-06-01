@@ -118,7 +118,7 @@ public class WorkboxActionSLFacade implements WorkboxActionSLFacadeLocal {
 		
 //		PreparedStatement preparedStatement;
 		ResponseMessage responseMessage = new ResponseMessage();
-		responseMessage.setMessage("Tasks(s) Claim Failed");
+		responseMessage.setMessage("Tasks(s) Forward Failed");
 		responseMessage.setStatus("FAILURE");
 		responseMessage.setStatusCode("1");
 		DateFormat df = new SimpleDateFormat(PMCConstant.DETAILDATE_AMPM_FORMATE);
