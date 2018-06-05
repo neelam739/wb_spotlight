@@ -32,7 +32,7 @@ import javax.persistence.TemporalType;
 		@SqlResultSetMapping(name = "workBoxResults", columns = { @ColumnResult(name = "REQUEST_ID"), @ColumnResult(name = "PROCESS_NAME"), @ColumnResult(name = "TASK_ID"),
 				@ColumnResult(name = "DESCRIPTION"), @ColumnResult(name = "TASK_NAME"), @ColumnResult(name = "TASK_SUBJECT"), @ColumnResult(name = "STARTED_BY"),
 				@ColumnResult(name = "TASK_CREATED_AT"), @ColumnResult(name = "TASK_STATUS"), @ColumnResult(name = "CUR_PROC"), @ColumnResult(name = "SLA"), @ColumnResult(name = "PROCESS_ID"), 
-				@ColumnResult(name = "URL"), @ColumnResult(name = "SLA_DUE_DATE"), @ColumnResult(name = "FORWARDED_BY"), @ColumnResult(name = "FORWARDED_AT"), @ColumnResult(name = "PROCESS_DISPLAY_NAME")  }),
+				@ColumnResult(name = "URL"), @ColumnResult(name = "SLA_DUE_DATE"), @ColumnResult(name = "FORWARDED_BY"), @ColumnResult(name = "FORWARDED_AT"), @ColumnResult(name = "PROCESS_DISPLAY_NAME"), @ColumnResult(name = "ORIGIN")  }),
 		@SqlResultSetMapping(name = "workBoxCompletedResults", columns = { @ColumnResult(name = "REQUEST_ID"), @ColumnResult(name = "PROCESS_NAME"), @ColumnResult(name = "TASK_ID"), 
 				@ColumnResult(name = "DESCRIPTION"), @ColumnResult(name = "TASK_NAME"), @ColumnResult(name = "TASK_SUBJECT"), @ColumnResult(name = "STARTED_BY"),
 				@ColumnResult(name = "TASK_CREATED_AT"), @ColumnResult(name = "TASK_STATUS"), @ColumnResult(name = "CUR_PROC") , @ColumnResult(name = "COMPLETED_AT"), @ColumnResult(name = "PROCESS_ID"), @ColumnResult(name = "SLA_DATE"), @ColumnResult(name = "DISP_NAME") }),

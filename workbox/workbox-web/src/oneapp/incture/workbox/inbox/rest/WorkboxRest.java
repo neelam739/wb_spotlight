@@ -39,10 +39,10 @@ public class WorkboxRest {
 			@QueryParam("createdBy") String createdBy, @QueryParam("createdAt") String createdAt,
 			@QueryParam("skipCount") Integer skipCount, @QueryParam("maxCount") Integer maxCount,
 			@QueryParam("page") Integer page, @QueryParam("orderBy") String orderBy,
-			@QueryParam("orderType") String orderType){
+			@QueryParam("orderType") String orderType, @QueryParam("origin") String origin){
 		
 		return workbox.getWorkboxFilterData(processName, requestId, createdBy, createdAt, status, skipCount, maxCount,
-				page, orderBy, orderType);
+				page, orderBy, orderType, origin);
 	}
 
 	@GET

@@ -28,7 +28,7 @@ public class WorkBoxDto {
 	private CustomAttributeDto customAttributes;
 	/* this attribute is added for setting sla due date*/
 	private String slaDueDate;
-	
+	private String origin;
 	/* Forwarded At And Forwarded By Added */
 	private String forwardedBy;
 	private String forwardedAt;
@@ -36,6 +36,14 @@ public class WorkBoxDto {
 	/* Process Display Name */
 	private String processDisplayName;
 
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
 
 	public String getSlaDueDate() {
 		return slaDueDate;
@@ -237,8 +245,9 @@ public class WorkBoxDto {
 				+ ", status=" + status + ", taskOwner=" + taskOwner + ", taskId=" + taskId + ", processId=" + processId
 				+ ", taskDescription=" + taskDescription + ", detailURL=" + detailURL + ", timePercentCompleted="
 				+ timePercentCompleted + ", timeLeftDisplayString=" + timeLeftDisplayString + ", isBreached="
-				+ isBreached + ", slaDisplayDate=" + slaDisplayDate + ", sla=" + sla + ", url=" + url + ", slaDueDate="
-				+ slaDueDate + ", forwardedBy=" + forwardedBy + ", forwardedAt=" + forwardedAt + ", processDisplayName="
+				+ isBreached + ", slaDisplayDate=" + slaDisplayDate + ", sla=" + sla + ", url=" + url
+				+ ", customAttributes=" + customAttributes + ", slaDueDate=" + slaDueDate + ", origin=" + origin
+				+ ", forwardedBy=" + forwardedBy + ", forwardedAt=" + forwardedAt + ", processDisplayName="
 				+ processDisplayName + "]";
 	}
 

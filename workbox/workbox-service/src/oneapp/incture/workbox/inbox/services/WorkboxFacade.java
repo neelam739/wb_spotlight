@@ -69,7 +69,7 @@ public class WorkboxFacade implements WorkboxFacadeLocal {
 	@Override
 	public WorkboxResponseDto getWorkboxFilterData(String processName, String requestId, String createdBy,
 			String createdAt, String status, Integer skipCount, Integer maxCount, Integer page, String orderBy,
-			String orderType) {
+			String orderType, String origin) {
 		//	System.err.println("[PMC][WorkBoxFacade][getWorkboxFilterData] method invoked ");
 
 //		String fetchStatus = fetchData("6000847", "india123");
@@ -86,7 +86,7 @@ public class WorkboxFacade implements WorkboxFacadeLocal {
 		if (!ServicesUtil.isEmpty(taskOwner)) {
 			SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("dd-MMM-yy hh:mm:ss a");
 
-			String dataQuery = 	"SELECT pe.REQUEST_ID AS REQUEST_ID, pe.NAME AS PROCESS_NAME ,te.EVENT_ID AS TASK_ID, te.DESCRIPTION AS DESCRIPTION, te.NAME AS TASK_NAME, te.SUBJECT AS TASK_SUBJECT, pe.STARTED_BY_DISP AS STARTED_BY, te.CREATED_AT AS TASK_CREATED_AT, te.STATUS AS TASK_STATUS,te.CUR_PROC AS CUR_PROC,'SLA' AS SLA, te.PROCESS_ID AS PROCESS_ID, te.URL AS URL,te.COMP_DEADLINE AS SLA_DUE_DATE, Te.FORWARDED_BY AS FORWARDED_BY, Te.FORWARDED_AT AS FORWARDED_AT, pct.PROCESS_DISPLAY_NAME AS PROCESS_DISPLAY_NAME FROM TASK_EVENTS te, PROCESS_EVENTS pe, TASK_OWNERS tw , PROCESS_CONFIG_TB pct WHERE pe.PROCESS_ID = te.PROCESS_ID AND tw.EVENT_ID = te.EVENT_ID AND pct.PROCESS_NAME = pe.NAME";
+			String dataQuery = 	"SELECT pe.REQUEST_ID AS REQUEST_ID, pe.NAME AS PROCESS_NAME ,te.EVENT_ID AS TASK_ID, te.DESCRIPTION AS DESCRIPTION, te.NAME AS TASK_NAME, te.SUBJECT AS TASK_SUBJECT, pe.STARTED_BY_DISP AS STARTED_BY, te.CREATED_AT AS TASK_CREATED_AT, te.STATUS AS TASK_STATUS,te.CUR_PROC AS CUR_PROC,'SLA' AS SLA, te.PROCESS_ID AS PROCESS_ID, te.URL AS URL,te.COMP_DEADLINE AS SLA_DUE_DATE, Te.FORWARDED_BY AS FORWARDED_BY, Te.FORWARDED_AT AS FORWARDED_AT, pct.PROCESS_DISPLAY_NAME AS PROCESS_DISPLAY_NAME, te.ORIGIN AS ORIGIN FROM TASK_EVENTS te, PROCESS_EVENTS pe, TASK_OWNERS tw , PROCESS_CONFIG_TB pct WHERE pe.PROCESS_ID = te.PROCESS_ID AND tw.EVENT_ID = te.EVENT_ID AND pct.PROCESS_NAME = pe.NAME";
 			//	+ "AND pe.STATUS = 'IN_PROGRESS'";
 			String query = "";
 			if (!ServicesUtil.isEmpty(status)) {
@@ -122,6 +122,9 @@ public class WorkboxFacade implements WorkboxFacadeLocal {
 			}
 			if (!ServicesUtil.isEmpty(createdAt)) {
 				query = query + " AND to_char(cast(te.CREATED_AT as date),'MM/DD/YYYY')= '" + createdAt + "'";
+			}
+			if(!ServicesUtil.isEmpty(origin)) {
+				query = query + " AND te.ORIGIN = '"+origin+"'";
 			}
 
 			String countQuery = " SELECT  COUNT(*) AS COUNT FROM TASK_EVENTS te, PROCESS_EVENTS pe, TASK_OWNERS tw WHERE pe.PROCESS_ID = te.PROCESS_ID AND tw.EVENT_ID = te.EVENT_ID"
@@ -240,6 +243,7 @@ public class WorkboxFacade implements WorkboxFacadeLocal {
 							: simpleDateFormat1.format(ServicesUtil.resultAsDate(obj[15])));
 					workBoxDto.setProcessDisplayName(obj[16] == null ? (String) obj[1] : (String) obj[16]);
 					// workBoxDto.setUrl();
+					workBoxDto.setOrigin(obj[17] == null ? null : (String) obj[17]);
 					
 					System.err.println("setProcessDisplayName" + workBoxDto.getProcessDisplayName());
 					workBoxDtos.add(workBoxDto);

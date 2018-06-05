@@ -12,7 +12,7 @@ import oneapp.incture.workbox.poadapter.dto.ResponseMessage;
 public interface WorkboxFacadeLocal {
 
 	public WorkboxResponseDto getWorkboxFilterData(String processName, String requestId, String createdBy, String createdAt,
-			String status, Integer skipCount, Integer maxCount, Integer page,String orderBy,String orderType );
+			String status, Integer skipCount, Integer maxCount, Integer page,String orderBy,String orderType, String origin );
 
 
 	public WorkboxResponseDto getWorkboxCompletedFilterData(String processName, String requestId, String createdBy,
